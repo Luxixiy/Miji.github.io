@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>万能秘籍</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        position: relative;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .centered-text {
+        font-size: 180px;
+        font-weight: bold;
+        z-index: 2;
+        position: relative;
+    }
+    #movingImage {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        z-index: 1;
+    }
+</style>
+</head>
+<body>
+
+<div class="centered-text" id="randomColorsText">🤡建议你问百度哦🤡</div>
+<img id="movingImage" src="https://img.alicdn.com/imgextra/i3/O1CN01JklLKx1sR35eOd70O_!!6000000005762-0-tps-1282-1282.jpg" alt="移动的图片">
+
+<script>
+// 随机颜色函数
+function getRandomColor() {
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
+
+// 更新颜色函数
+function updateColors() {
+    const textContainer = document.getElementById('randomColorsText');
+    let newHtml = '';
+    for (const char of textContainer.textContent) {
+        newHtml += `<span style="color: ${getRandomColor()};">${char}</span>`;
+    }
+    textContainer.innerHTML = newHtml;
+}
+
+// 随机运动图片函数
+let dx = 2; // 水平速度
+let dy = 2; // 垂直速度
+function moveImage() {
+    const img = document.getElementById('movingImage');
+    let x = img.offsetLeft + dx;
+    let y = img.offsetTop + dy;
+    const maxX = window.innerWidth - img.width;
+    const maxY = window.innerHeight - img.height;
+
+    // 检测边缘碰撞
+    if (x < 0 || x > maxX) dx = -dx;
+    if (y < 0 || y > maxY) dy = -dy;
+
+    // 更新位置
+    img.style.left = x + 'px';
+    img.style.top = y + 'px';
+}
+
+// 初始化
+function init() {
+    setInterval(updateColors, 1000);
+    setInterval(moveImage, 10);
+}
+
+window.onload = init;
+</script>
+
+</body>
+</html>
